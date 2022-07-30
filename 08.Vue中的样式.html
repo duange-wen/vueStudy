@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .red{
+        color: red;
+    }
+    .thin{
+        font-weight: 200;
+    }
+    .italic{
+        font-style: italic;
+    }
+    .acitve{
+        letter-spacing: 0.5em;
+    }
+    </style>
+</head>
+<body>
+    <div id="d1">
+        <h1 class="red thin">{{message}}</h1>
+        <!-- 直接传递一个数组，注意，这里的class需要使用 v-bind做数据绑定 -->
+        <h1 :class="['italic','thin']">{{message}}</h1>
+        <!-- 在数组中使用三元表达式 -->
+        <h1 :class="['thin', 'italic', flag?'active':'']">{{message}}</h1>
+        <!-- 在数组中用對象來使用使用三元表达式 提高了代碼的可讀性-->
+        <h1 :class="['thin', 'italic', {'red':flag}]">{{message}}</h1>
+        <!--在為class使用的v-bind綁定對象的時候，對象的屬性是類名，由於對象的屬性可帶引號也可以不帶引號
+         屬性的值其實是一個標識符 -->
+         <h1 :class="classObj">   {{message}}</h1>
+         <h1 :style="[ styleObj1, styleObj2 ]">这是一个h1</h1>   
+
+    </div>
+</body>
+<script src="lib/vue.js"></script>
+<script>    
+    const app=new Vue({
+        el:"#d1",
+        data:{
+            message:"这是一个简单的div",
+            flag:true,
+            classObj:{red:false,thin:true,italic:true,acitve:true},
+            styleObj1:{'color':'yellow','font-weight':'200px'},
+            styleObj2:{'font-style':'italic'},
+        },
+        methods: {
+            
+        },
+    })
+</script>
+</html>

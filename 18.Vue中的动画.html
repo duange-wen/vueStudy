@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 第三方动画库 -->
+  <link rel="stylesheet" href="lib/animate.css">
+  <style>
+    .v-enter,
+    .v-leave-to {
+      opacity: 0;
+      transform: translateX(200px);
+    }
+
+    .v-enter-active,
+    /*进入时*/
+    .v-leave-active
+
+    /*离开时*/
+      {
+      transition: all 0.4s ease;
+    }
+
+    .my-enter,
+    .my-leave-to {
+      opacity: 0;
+      transform: translateY(200px);
+    }
+
+    .my-enter-active,
+    .my-leave-active {
+      transition: all 0.4s ease;
+    }
+
+    .ball {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: yellow;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="d1">
+    <!-- 不使用动画 -->
+    <input type="button" value="toggel" @click="flag1=!flag1">
+    <!-- 需求 -->
+    <h3 v-if="flag1">这是一个H3</h3>
+
+    <br>
+
+    <!-- 使用过度动画 -->
+    <input type="button" value="toggel" @click="flag2=!flag2">
+    <transition>
+      <h3 v-if="flag2">这是一个H3</h3>
+    </transition>
+
+    <br>
+
+    <!-- 使用过度动画 -->
+    <input type="button" value="toggel" @click="flag3=!flag3">
+    <transition name=my>
+      <h4 v-if="flag3">这是一个H4</h4>
+    </transition>
+
+    <br>
+
+    <!-- 用内库来做过度动画 -->
+    <input type="button" value="toggel" @click="flag4=!flag4">
+    <!-- 新版本的内库可以不用加animated -->
+    <!-- 使用:duration="毫秒值" 来统一设置入场和离场的动画时长 使用 :duration="{enter:200,leave:400}" 来分别设置入场和离场的时长-->
+    <transition enter-active-class=" bounceIn" leave-active-class=" bounceOut" :duration="{enter:2000,leave:2000}">
+      <h3 v-if="flag4">这是一个H3</h3>
+    </transition>
+
+    <br>
+
+    <input type="button" value="toggel" @click="flag5=!flag5">
+
+    <transition
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="afterEnter">
+      <div class="ball" v-show="Flag5" ref="ball"></div>
+    </transition>
+
+
+  </div>
+</body>
+<script src="lib/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: "#d1",
+    data: {
+      flag1: false,
+      flag2: false,
+      flag3: false,
+      flag4: false,
+      flag5: false,
+    },
+    methods: {
+      // 注意：动画钩子函数的第一个参数el，表示要执行动画的那个DOM元素  四个原生的JS  DOM对象document.getElementBtId('')方式获取到的原生JS DOM对象
+      // 大家可以认为，el是通过
+      beforeEnter(el) {
+        // beforeEnter 表示动画之前，此时，动画还没有开始，可以 在beforeEnter中，设置起始动画
+        // 设置小球开始动画之前的起始位置
+        el.style.transform = "translate(0, 0)"
+      },
+      enter(el,done) {
+        // 这句话，没实际的作用，但是，如果不写，出不来动画效果
+        el.offsetWidth
+        //enter表示动画  开始之后的样式，这里，可以设置小球完成之后的，结束状态
+        el.style.transform = "translate(150px, 450px)"
+          el.style.transition = 'all 1s ease'
+          done()
+      },
+      afterEnter(el) {
+        // 动画完成之后，会调用 afterEnter
+        //   console.log('ok')
+          this.flag5 = !this.flag5
+      }
+
+    },
+  })
+
+</script>
+
+</html>

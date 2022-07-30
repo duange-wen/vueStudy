@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="d1">
+    <!-- 遍歷普通數組 -->
+    <!-- <p>{{list[0]}}</p>
+        <p>{{list[1]}}</p>
+        <p>{{list[2]}}</p>
+        <p>{{list[3]}}</p>
+        <p>{{list[4]}}</p> -->
+    <p v-for="(item,i) in list">{{i}}{{item}}</p>
+  </div>
+
+  <div id="d2">
+    <!-- 遍歷對象數組 -->
+    <p v-for="(user,i) in list">索引:{{i}},ID:{{user.id}},姓名:{{user.name}}</p>
+  </div>
+
+  <!-- 遍歷對象 -->
+  <div id="d3">
+      <!-- 注意：在遍历对象身上的键值对的时候， 除了 有  val  key  ,在第三个位置还有 一个 索引  -->
+    <p v-for="(val,key,i) in user">值是：{{val}}--鍵是：{{key}}--索引{{i}}</p>
+  </div>
+  <!-- 必須創建Vue實例，得到viewModel -->
+  <div id="d4">
+      <p v-for="count in 10">這是第{{count}}</p>
+  </div>
+  
+</body>
+<script src="lib/vue.js"></script>
+<script>
+  const app1 = new Vue({
+    el: "#d1",
+    data: {
+      list: [1, 2, 3, 4, 5]
+    },
+    methods: {
+
+    },
+  })
+  const app2 = new Vue({
+    el: "#d2",
+    data: {
+      list: [{
+          id: 1,
+          name: "zz"
+        },
+        {
+          id: 2,
+          name: "xx"
+        },
+        {
+          id: 3,
+          name: "dd"
+        },
+        {
+          id: 4,
+          name: "vv"
+        }
+      ]
+    },
+    methods: {
+
+    },
+  })
+  const app3 = new Vue({
+    el: "#d3",
+    data: {
+      user: {
+        id: 1,
+        name: "zz",
+        gender: "男"
+      }
+    },
+    methods: {
+
+    },
+  })
+  const app4 = new Vue({
+    el: "#d4",
+    data: {
+     
+    },
+    methods: {
+
+    },
+  })
+
+</script>
+
+</html>

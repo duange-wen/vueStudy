@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="d1">
+    <!-- 要使用组件，直接，把组件的名称，以HTML标签的形式，引入到页面中，即可 -->
+    <mycom1></mycom1>
+    <hr>
+    <mycom2></mycom2>
+    <hr>
+    <mycom3></mycom3>
+    <hr>
+    <mycom4></mycom4>
+    <hr>
+    <counter></counter>
+    <hr>
+    <counter></counter>
+    <hr>
+    <counter></counter>
+  </div>
+
+  <!-- 在被控制的 #d1外面，使用template元素，定义组件的HTML模板结构 -->
+  <template id="tmp1">
+    <div>
+        <h1>这是通过template元素，在外部定义的组件结构，这个方式，有代码的只能提示和高亮</h1>
+        <h4>好的，不错</h4>
+    </div>
+  </template>
+  <template id="tmp2">
+    <div>
+        <input type="button" value="+1" @click="increment">
+        <h3>{{count}}</h3>
+    </div>
+  </template>
+</body>
+<script src="lib/vue.js"></script>
+<script>
+  // 第一种方式
+  //1.1使用Vue.extend来创建全局的Vue组件
+  //   var com1 = Vue.extend({
+  //     template: "<h3>这是使用Vue.extend创建的组件</h3>"
+  // 通过template属性，指定了组件要展示的HTML结构
+  //   })
+  // 1.2使用Vue.component('组件的名称'，创建出来的组件模板对象)
+  //   如果使用驼峰命名 标签则用-来链接 而且大写转小写 如果不使用 则直接拿来使用
+  //   Vue.component('myCom1', com1)
+  //   Vue.component('mycom1', com1)
+  // 合并方式  
+  Vue.component('mycom1', Vue.extend({
+    template: "<h3>这是使用Vue.extend创建的组件</h3>"
+  }))
+
+// 第二种方式
+  Vue.component('mycom2',{
+    template: "<h3>这是使用Vue.component创建的组件</h3>"
+  })
+//   注意：不管用那种方式创建出来的组件，组建的template属性指向的模板内容，必须有且只能有唯一的一个根元素
+
+// 第三种方式
+  Vue.component('mycom3',{
+    template: '#tmp1'
+  })
+
+// 组件中的data  和methods
+// 组件的data和实例data有点不一样，实例中的data可以为一个对象，但是  组件中的data必须是一个方法  而且还必须返回一个对象 组件中的data方式和实例中的用法一样
+  Vue.component('mycom4',{
+    template: "<h3>这是个全局组件 ---{{msg}}</h3>",
+    data:function(){
+        return {
+            msg:"这是组件中的data定义的数据"
+        }
+    }
+  })
+
+  Vue.component('counter',{
+    template: "#tmp2",
+    // 这里为什么是个函数？
+    // 通过function return一个新开辟对象，确保每个组件实例独有不共享
+    data:function(){
+        return{
+            count:0
+        }
+    },
+    methods:{
+        increment(){
+            this.count++
+        }
+    }
+  })
+
+  const app = new Vue({
+    el: "#d1",
+    data: {
+
+    },
+    methods: {
+
+    },
+    components:{
+        // 定义实例内部的私有组件的
+        // 和全局写法一样
+        login:{
+            template:'<h1>这是一个私有的组件</h1>'
+        }
+    }
+  })
+
+</script>
+
+</html>

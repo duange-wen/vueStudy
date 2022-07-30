@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="d1">
+    <h2>当前数量：{{message}}</h2>
+    <!--<button v-on:click="message++">+</button>
+    <button v-on:click="message&#45;&#45;">-</button>-->
+    <button v-on:click="add">+</button>
+    <button >-</button>
+</div>
+<script src="lib/vue.js"></script>
+<script>
+    new Vue({
+        el:"#d1",
+        data:{
+            message:0
+        },
+        methods:{
+            add() {
+                console.log("add执行了")
+                this.message++
+            },
+            sub: function () {
+                console.log("sub执行了")
+                this.message--
+            }
+        }
+    })
+</script>
+</body>
+</html>

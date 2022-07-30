@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="d1">
+      <h1>{{datamsgFormSon}}</h1>
+    <!-- 父组件向子组件 传递 方法，使用的是 事件绑定机制； v-on, 当我们自定义了 一个 事件属性之后，那么，子组件就能够，通过某些方式，来调用 传递进去的 这个 方法了 -->
+    <com2 @func="show"></com2>
+  </div>
+  <template id="tmp1">
+    <div>
+      <h1>这是子组件</h1>
+      <input type="button" value="触发" @click="myclick">
+    </div>
+  </template>
+</body>
+<script src="lib/vue.js"></script>
+<script>
+  // 定义一个字面两类型的  组件模板对象
+  var com2 = {
+    template: '#tmp1' ,
+    //通过指定一个Id，表示说   要加载  这个指定ID的template元素中的内容 ,当作组件HTML结构
+    data(){
+        return{
+            sonmsg:{name:'ice',age:'20'}
+        }
+    },
+    methods:{
+        myclick(){
+            //当点击子组件的按钮的时候，如何  拿到 父组件传递过来的func方法
+            // $emit 调用 
+            // 从第二个参数起都可以用来传参
+            this.$emit('func',this.sonmsg)
+        }
+    }
+  }
+  const app = new Vue({
+    el: "#d1",
+    data: {
+        datamsgFormSon:null
+    },
+    methods: {
+        show(data){
+            // console.log("执行了父组件的show方法---"+data)
+            console.log(data)
+            this.datamsgFormSon=data
+        }
+    },
+    components: {
+        com2
+        // com2: com2
+      }
+  })
+
+</script>
+
+</html>

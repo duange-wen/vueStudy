@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="d1">
+    <p>{{msg|msgFormat('铁','憨憨')|text}}</p>
+    <!-- <p>{{msg|msgFormat}}</p> -->
+  </div>
+  <div id="d2">
+      <p>{{msg|dateFormat}}</p>
+  </div>
+</body>
+<script src="lib/vue.js"></script>
+<script>
+  //过滤器
+  // Vue.filter('过滤器的名称',function(){})
+  //过滤器的function第一个参数，已经被固定死了，永远是管道符前面 传递过来的数据
+  /* Vue.filter('过滤器的名称',function(data){
+    return data+'123'
+  }) */
+  //定义一个Vue 全局 的过滤器,名字叫做msgFormat
+  Vue.filter('msgFormat', function (msg, arg,arg1) {
+    //字符串的replace方法，只能替换第一个参数，但第一个参数除了可以写一个字符串之外，还可以写正则
+    return msg.replace(/单纯/g, arg+arg1)
+  })
+//   可以调用多个过滤器
+  Vue.filter('text', function (msg) {
+    return msg+"!!!"
+  })
+
+
+
+
+
+  const app = new Vue({
+    el: "#d1",
+    data: {
+      msg: '曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的男人'
+    },
+    methods: {
+
+    },
+  })
+
+  //私有的过滤器 局部的
+  const app2 = new Vue({
+    el: "#d2",
+    data: {
+      msg:'哈哈哈'
+    },
+    methods: {
+
+    },
+    filters:{
+        dateFormat:function(msg){
+            return msg+"!!!"
+        }
+    }
+  })
+
+</script>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+    <style>
+        /* *{
+            margin: 0;
+            padding: 0;
+        } */
+        .header{
+            width: 100%;
+            height: 30px;
+            background-color:yellow;
+            text-align: center;
+        }
+        .leftBox{
+            width: 30%;
+            height: 600px;
+            background-color:pink;
+            margin-top: 10px;
+            float: left;
+        }
+        .mainBox{
+            float: right;
+            width: 60%;
+            height: 600px;
+            background-color: blue;
+            margin-top: 10px;
+
+        }
+    </style>
+<body>
+  <div id="d1">
+
+    <router-view></router-view>
+    <!-- name里面是个字符串 前面加冒号要考虑前面是值还是字符串 -->
+    <router-view name='left'></router-view>
+    <router-view name="main"></router-view>
+  </div>
+</body>
+<script src="lib/vue.js"></script>
+<script src="lib/vue-router.js"></script>
+<script>
+  var header = {
+    template: '<h1 class="header">Header</h1>'
+  }
+
+  var leftBox = {
+    template: '<h1 class="leftBox">LeftBox</h1>'
+  }
+
+  var mainBox = {
+    template: '<h1 class="mainBox">mainBox</h1>'
+  }
+
+  const router = new VueRouter({
+    routes: [
+      /*  {path:'/',component:header},
+       {path:'/left',component:leftBox},
+       {path:'/main',component:mainBox} */
+      {
+        path: '/',
+        components:{
+            'default':header,
+            "left":leftBox,
+            'main':mainBox
+        }
+      }
+    ]
+  })
+
+  const app = new Vue({
+    el: "#d1",
+    data: {
+
+    },
+    methods: {
+
+    },
+    router:router
+  })
+
+</script>
+
+</html>

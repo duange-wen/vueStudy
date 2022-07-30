@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  .router-link-active,
+  .myclass {
+    color: cornflowerblue;
+    font-weight: 100;
+    font-size: 24px;
+    background-color: #ccc;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .v-enter,.v-leave-to{
+    opacity: 0;
+    transform: translateX(120px);
+  }
+  .v-enter-active,.v-leave-active{
+      transition: all 0.5s ease;
+  }
+</style>
+
+<body>
+  <div id="d1">
+    <!-- <a href="#/login">登录</a> -->
+    <!-- <a href="#/register">注册</a> -->
+<!-- 如果在路由中，使用  查询字符串，给路由传递参数，则不需要修改路由规则的 path属性 -->
+    <router-link to="/login?id=10&name=ice">登录</router-link>
+    <router-link to="/register/12/ice">注册</router-link>
+    <!-- 这是vue-router提供的元素，专门用来 当作占位符的，将来 -，路由规则，匹配到的组件，将会展示到这个router-view中去 -->
+
+    <transition mode="out-in">
+      <router-view> </router-view>
+    </transition>
+  </div>
+</body>
+<script src="lib/vue.js"></script>
+<script src="lib/vue-router.js"></script>
+<script>
+    // 可以传多个参数
+  var login = {
+template: '<h1>登录组件 --- {{$route.query.id}} --- {{$route.query.name}}</h1>',
+    data(){
+        return{
+
+        }
+    },
+    created() {
+        // console.log(this.$route.query.id);
+    },
+  }
+
+  var register = {
+    template: '<h1>注册组件 --- {{$route.params.id}} --- {{$route.params.name}}</h1>',
+    data(){
+        return{
+
+        }
+    },
+    created() {
+        // console.log(this.$route.params.id);
+    },
+  }
+
+  //   router  路由
+  //   route   路线
+  //   routes  路由匹配规则
+  // 创建一个路由对象，当  导入vue-router包之后，在window全局对象中，就有了一个路由的构造函数 叫做VueRouter
+  // 在mew路由对象的时候，可以为构造函数，传递一个配置对象
+  var routerObj = new VueRouter({
+    routes: [
+      //路由匹配规则
+      // 每个路由规则，都是一个对象，这个规则对象，身上，有两个必须的属性
+      // 属性1是path,表示监听 那个路由链接地址
+      // 属性2是component，表示，如果  路由是前面匹配到path，则展示component属性对应的那个组件
+      // 注意：component的属性值，必须是一个 组件模板对象 ，不能是组件引用名称
+      {
+        path: '/',
+        redirect: '/login'
+        //重定向  这里的redirect和node中redirect完全是两码事
+      },
+      {
+        path: '/login',
+        component: login
+      },
+      {
+        path: '/register/:id/:name',
+        component: register
+      }
+    ],
+    linkActiveClass: 'myclass'
+  })
+
+
+
+
+
+  const app = new Vue({
+    el: "#d1",
+    data: {
+
+    },
+    methods: {
+
+    },
+    router: routerObj //将路由规则对象，注册到vm实例中，用来监听URL地址的变化，然后展示对应的组件
+  })
+
+</script>
+
+</html>
